@@ -56,11 +56,11 @@ Widget articleBuilder(list){
         physics: BouncingScrollPhysics(),
         itemBuilder: (context, index) => buildArticleItem(list[index],context),
         separatorBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(top: 10.0,bottom: 10.0,left: 20.0,right: 20.0),
           child: Container(
             height: 1.0,
             width: double.infinity,
-            color: Colors.grey[300],
+            color: Theme.of(context).accentColor,
           ),
         ),
         itemCount: list.length),
