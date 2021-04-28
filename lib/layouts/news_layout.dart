@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layouts/cubit/cubit.dart';
 import 'package:news_app/layouts/cubit/states.dart';
 import 'package:news_app/modules/search/search_screen.dart';
-import 'package:news_app/shared/network/local/cache_helper.dart';
+
 
 class NewsLayout extends StatelessWidget {
   @override

@@ -34,4 +34,5 @@ class CacheHelper
   }){
     return sharedPreferences.getBool(key);
   }
+
 }
