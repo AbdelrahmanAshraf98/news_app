@@ -30,4 +30,6 @@ class NewsGetSearchLoadingState extends NewsStates{}
 
 class AppChangeModeState extends NewsStates{}
 
+class AppChangeCountryState extends NewsStates{}
+
 

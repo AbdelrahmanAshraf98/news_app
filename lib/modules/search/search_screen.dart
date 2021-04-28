@@ -5,15 +5,11 @@ import 'package:news_app/layouts/cubit/states.dart';
 import 'package:news_app/shared/components/components.dart';
 
 class SearchScreen extends StatelessWidget {
-
   var searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) {
-        return NewsCubit();
-      },
+      create: (context) => NewsCubit(),
       child: BlocConsumer<NewsCubit,NewsStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -29,14 +25,13 @@ class SearchScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: TextFormField(
+                    style: Theme.of(context).textTheme.bodyText2,
                     controller: searchController,
                     keyboardType: TextInputType.text,
-                    // style: TextStyle(color: Colors.black),
                     onChanged: (value){
                       s="";
                       s+=value;
-                      print(s);
-                      // NewsCubit.get(context).getSearch(s);
+                      NewsCubit.get(context).getSearch(s);
                     },
                     decoration: InputDecoration(
                       labelText: 'Search',

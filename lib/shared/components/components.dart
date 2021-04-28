@@ -71,6 +71,10 @@ Widget articleBuilder(list,{isSearch = false}){
           ),
         ),
         itemCount: list.length),
-    onConditionFalse: isSearch ? Container() : Center(child: CircularProgressIndicator()),
+    onConditionFalse: isSearch ? Center(
+      child: Container(
+        child: Image(image: AssetImage('assets/images/search1.png'),width: 300,height: 300,),
+      ),
+    ) : Center(child: CircularProgressIndicator()),
   );
 }

@@ -8,16 +8,30 @@ class CacheHelper
   static init()async{
     sharedPreferences = await SharedPreferences.getInstance();
   }
-  static Future<bool> putData({
+
+  static Future<bool>setCountry({
     @required String key,
-    @required bool value,
-  }){
-    sharedPreferences.setBool(key,value);
+    @required int value,
+  })async{
+    return await sharedPreferences.setInt(key, value);
   }
 
-  static bool getData({
+  static int getCountry({
     @required String key,
   }){
-    sharedPreferences.getBool(key);
+    return sharedPreferences.getInt(key);
+  }
+
+  static Future<bool>setTheme({
+    @required String key,
+    @required bool value,
+  })async{
+    return await sharedPreferences.setBool(key,value);
+  }
+
+  static bool getTheme({
+    @required String key,
+  }){
+    return sharedPreferences.getBool(key);
   }
 }

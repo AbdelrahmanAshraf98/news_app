@@ -21,6 +21,10 @@
     hexcolor: ^2.0.3
     shared_preferences: ^2.0.5
     webview_flutter: ^2.0.4
+    circle_flags: ^0.0.2
+    floatingpanel: ^1.1.3
+    flutter_emoji: ">= 2.0.0"
+    flutter_svg: ^0.22.0
 
   dev_dependencies:
     flutter_test:
@@ -30,4 +34,9 @@
 
     uses-material-design: true
 
+
+    assets:
+        - assets/images/search1.svg
+        - assets/images/search.svg
+        - assets/images/search1.png
 

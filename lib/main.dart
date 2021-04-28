@@ -11,29 +11,26 @@ import 'layouts/cubit/states.dart';
 import 'layouts/news_layout.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-
-  // bool isDark = CacheHelper.getData(key:'isDark');
-
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // final bool isDark;
-  MyApp();
   @override
   Widget build(BuildContext context) {
+    bool isDark = CacheHelper.getTheme(key:'isDark');
+    int x = CacheHelper.getCountry(key:'countryId');
     return BlocProvider(
-      create: (context) => NewsCubit()..getBusiness(),
+      create: (context) => NewsCubit()
+        ..changeMode(fromShared: isDark)
+        ..changeCountry(index : x)
+        ..getBusiness(),
       child: BlocConsumer<NewsCubit,NewsStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          // print(CacheHelper.getData(key: 'isDark'));
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -63,6 +60,14 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.white,
               ),
               textTheme: TextTheme(
+                subtitle1: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+                ),
+                bodyText2:TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  ) ,
                   bodyText1: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -70,7 +75,11 @@ class MyApp extends StatelessWidget {
               )),
             ),
             darkTheme: ThemeData(
-              accentColor: Colors.white,
+              canvasColor:  HexColor('333739'),
+              buttonTheme: ButtonThemeData(
+                buttonColor: Colors.deepOrangeAccent
+              ),
+              accentColor: Colors.white30,
               primarySwatch: Colors.deepOrange,
               hintColor: Colors.white,
               inputDecorationTheme: InputDecorationTheme(
@@ -105,6 +114,14 @@ class MyApp extends StatelessWidget {
                 elevation: 20.0,
               ),
               textTheme: TextTheme(
+                  subtitle1: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                  ) ,
+                  bodyText2:TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                  ) ,
                   bodyText1: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -112,7 +129,7 @@ class MyApp extends StatelessWidget {
               )),
             ),
             themeMode:
-                NewsCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
+                NewsCubit.get(context).isDark? ThemeMode.dark : ThemeMode.light,
             home: NewsLayout(),
           );
         },
