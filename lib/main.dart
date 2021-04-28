@@ -5,18 +5,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:news_app/layouts/cubit/cubit.dart';
 import 'package:news_app/shared/bloc_observer.dart';
-import 'package:news_app/shared/cubit/cubit.dart';
-import 'package:news_app/shared/cubit/states.dart';
 import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 import 'layouts/cubit/states.dart';
 import 'layouts/news_layout.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
+
+  // bool isDark = CacheHelper.getData(key:'isDark');
 
   runApp(MyApp());
 }
@@ -26,22 +28,16 @@ class MyApp extends StatelessWidget {
   MyApp();
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => NewsCubit()..getBusiness(),
-        ),
-        BlocProvider(
-            create: (context) => AppCubit()),
-      ],
-      child: BlocConsumer<AppCubit,AppStates>(
+    return BlocProvider(
+      create: (context) => NewsCubit()..getBusiness(),
+      child: BlocConsumer<NewsCubit,NewsStates>(
         listener: (context, state) {},
         builder: (context, state) {
           // print(CacheHelper.getData(key: 'isDark'));
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              inputDecorationTheme: InputDecorationTheme(),
+              accentColor: Colors.grey,
               primarySwatch: Colors.deepOrange,
               scaffoldBackgroundColor: Colors.white,
               appBarTheme: AppBarTheme(
@@ -74,7 +70,18 @@ class MyApp extends StatelessWidget {
               )),
             ),
             darkTheme: ThemeData(
-              accentColor: Colors.black26,
+              accentColor: Colors.white,
+              primarySwatch: Colors.deepOrange,
+              hintColor: Colors.white,
+              inputDecorationTheme: InputDecorationTheme(
+                focusColor: Colors.deepOrangeAccent,
+                fillColor: Colors.white,
+                suffixStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
               scaffoldBackgroundColor: HexColor('333739'),
               appBarTheme: AppBarTheme(
                 titleSpacing: 20.0,
@@ -105,7 +112,7 @@ class MyApp extends StatelessWidget {
               )),
             ),
             themeMode:
-                AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
+                NewsCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             home: NewsLayout(),
           );
         },

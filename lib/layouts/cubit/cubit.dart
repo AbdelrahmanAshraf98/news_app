@@ -97,16 +97,25 @@ class NewsCubit extends Cubit<NewsStates>{
 
   void getSearch(String value) {
     emit(NewsGetSearchLoadingState());
-    DioHelper.getData(url: 'v2/everything', query: {
-      'q': '$value',
-      'apiKey': '65f7f556ec76449fa7dc7c0069f040ca',
-    }).then((value) {
+    DioHelper.getData(
+        url: 'v2/everything',
+        query: {
+          'q': '$value',
+          'apiKey': '65f7f556ec76449fa7dc7c0069f040ca',
+        }).then((value) {
       search = value.data['articles'];
       emit(NewsGetSearchSuccessState());
     }).catchError((error) {
       print('Error 558 : ${error.toString()}');
       emit(NewsGetSearchErrorState());
     });
+  }
+
+  bool isDark = false;
+
+  void changeMode() {
+    isDark = !isDark;
+    emit(AppChangeModeState());
   }
 
   void changeBottomNavbar (index){
